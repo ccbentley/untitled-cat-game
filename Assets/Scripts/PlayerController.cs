@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public float CurrentMoveSpeed { get
         {
-            if(IsMoving && !touchingDirections.IsOnWall)
+            if(IsMoving && !touchingDirections.IsOnWall || IsMoving && touchingDirections.IsOnPushableObject)
             {
                 if(touchingDirections.IsGrounded)
                 {

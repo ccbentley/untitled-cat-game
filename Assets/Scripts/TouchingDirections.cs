@@ -42,6 +42,20 @@ public class TouchingDirections : MonoBehaviour
     }
 
     [SerializeField]
+    private bool _isOnPushableObject;
+    public bool IsOnPushableObject
+    {
+        get
+        {
+            return _isOnPushableObject;
+        }
+        private set
+        {
+            _isOnPushableObject = value;
+        }
+    }
+
+    [SerializeField]
     private bool _isOnCeiling;
     private Vector2 wallCheckDirection => gameObject.transform.localScale.x > 0 ? Vector2.right : Vector2.left;
 
@@ -69,5 +83,21 @@ public class TouchingDirections : MonoBehaviour
         IsGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
         IsOnWall = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance) > 0;
         IsOnCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
+
+        int hitCount = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance);
+        if (hitCount > 0)
+        {
+            for (int i = 0; i < hitCount; i++)
+            {
+                if (wallHits[i].collider.CompareTag("Pushable"))
+                {
+                    IsOnPushableObject = true;
+                }
+                else
+                {
+                    IsOnPushableObject = false;
+                }
+            }
+        }
     }
 }

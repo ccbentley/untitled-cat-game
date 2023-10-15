@@ -18,19 +18,22 @@ public class PlayerController : MonoBehaviour
 
     public float CurrentMoveSpeed { get
         {
-            if(touchingDirections.IsGrounded)
+            if(IsMoving && !touchingDirections.IsOnWall)
             {
-
-            }
-            if (IsMoving && !touchingDirections.IsOnWall)
-            {
-                if (IsRunning)
+                if(touchingDirections.IsGrounded)
                 {
-                    return runSpeed;
+                    if(IsRunning)
+                    {
+                        return runSpeed;
+                    }
+                    else
+                    {
+                        return walkSpeed;
+                    }
                 }
                 else
                 {
-                    return walkSpeed;
+                    return airWalkSpeed;
                 }
             }
             else
@@ -133,6 +136,11 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger(AnimationStrings.jump);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        }
+
+        if(context.canceled && rb.velocity.y > 0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
     }
 }

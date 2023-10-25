@@ -1,15 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Damageable : MonoBehaviour
 {
+    public UnityEvent<int, Vector2> damageableHit;
+    public UnityEvent damageableDeath;
+    public UnityEvent<int, int> healthChanged;
+
     Animator animator;
 
     [SerializeField]
-    private float _maxHealth = 100;
+    private int _maxHealth = 100;
 
-    public float MaxHealth 
+    public int MaxHealth
     {
         get
         {
@@ -22,9 +28,9 @@ public class Damageable : MonoBehaviour
     }
 
     [SerializeField]
-    private float _health = 100;
+    private int _health = 100;
 
-    public float Health
+    public int Health
     {
         get
         {
@@ -33,9 +39,10 @@ public class Damageable : MonoBehaviour
         set
         {
             _health = value;
+            healthChanged?.Invoke(_health, MaxHealth);
 
             // If health drops below 0, object is no longer alive
-            if(_health < 0)
+            if (_health <= 0)
             {
                 IsAlive = false;
             }
@@ -43,10 +50,11 @@ public class Damageable : MonoBehaviour
     }
 
     [SerializeField]
-    private  bool _isAlive = true;
+    private bool _isAlive = true;
 
     [SerializeField]
     private bool isInvincible = false;
+
     private float timeSinceHit = 0;
     public float invincibilityTime = 0.25f;
 
@@ -60,6 +68,11 @@ public class Damageable : MonoBehaviour
         {
             _isAlive = value;
             animator.SetBool(AnimationStrings.isAlive, value);
+
+            if (value == false)
+            {
+                damageableDeath.Invoke();
+            }
         }
     }
 
@@ -70,9 +83,9 @@ public class Damageable : MonoBehaviour
 
     private void Update()
     {
-        if(isInvincible)
+        if (isInvincible)
         {
-            if(timeSinceHit > invincibilityTime)
+            if (timeSinceHit > invincibilityTime)
             {
                 // Remove invincibility
                 isInvincible = false;
@@ -83,12 +96,22 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    public void Hit(int damage)
+    // Returns wheather the damageable took damage or not
+    public bool Hit(int damage, Vector2 knockback)
     {
-        if(IsAlive && !isInvincible)
+        if (IsAlive && !isInvincible)
         {
             Health -= damage;
             isInvincible = true;
+
+            // Notify other subscribed components that the damageable was hit to handle the knockback and such
+            animator.SetTrigger(AnimationStrings.hitTrigger);
+            damageableHit?.Invoke(damage, knockback);
+
+            return true;
         }
+
+        // Unable to be hit
+        return false;
     }
 }

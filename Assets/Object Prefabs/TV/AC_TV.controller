@@ -31,7 +31,7 @@ AnimatorStateMachine:
     m_Position: {x: 240, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3952985143349360866}
-    m_Position: {x: 480, y: 40, z: 0}
+    m_Position: {x: 550, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5310323488210040763}
     m_Position: {x: 240, y: 50, z: 0}
@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeTime: 0.5
+  fadeDelay: 0
 --- !u!1101 &8293969005802812580
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -265,4 +266,4 @@ AnimatorStateTransition:
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_CanTransitionToSelf: 0

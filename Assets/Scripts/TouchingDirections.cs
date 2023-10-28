@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,6 +85,7 @@ public class TouchingDirections : MonoBehaviour
         IsOnWall = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance) > 0;
         IsOnCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
 
+        bool isPushableTouching = false;
         int hitCount = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance);
         if (hitCount > 0)
         {
@@ -91,13 +93,14 @@ public class TouchingDirections : MonoBehaviour
             {
                 if (wallHits[i].collider.CompareTag("Pushable"))
                 {
-                    IsOnPushableObject = true;
-                }
-                else
-                {
-                    IsOnPushableObject = false;
+                    isPushableTouching = true;
+
+                    // Stop checking once a pushable object is found
+                    break; 
                 }
             }
         }
+
+        IsOnPushableObject = isPushableTouching;
     }
 }

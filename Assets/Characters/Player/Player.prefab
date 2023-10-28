@@ -108,7 +108,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: bfc90ca5094da3b47bbf6046ff2c3cdd, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -135,9 +135,11 @@ MonoBehaviour:
   runSpeed: 8
   airWalkSpeed: 4
   jumpImpulse: 10
+  coyoteTimeDuration: 0.2
   _isMoving: 0
   _isRunning: 0
   _isFacingRight: 1
+  isCoyoteTimeActive: 0
 --- !u!114 &6641691979759886499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,10 +181,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e7b8d3c6-1a6f-4a4b-9740-868f6227204e
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2d69bf2a-fb76-434a-94ca-2314c016fd10
-    m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4775113780529455447}
@@ -329,7 +327,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.01, y: -0.01}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -340,7 +338,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6875, y: 0.65625}
+  m_Size: {x: 0.45, y: 0.57}
   m_EdgeRadius: 0
 --- !u!114 &7448197450125168779
 MonoBehaviour:

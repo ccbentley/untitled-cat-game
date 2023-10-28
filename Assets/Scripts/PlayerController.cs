@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 8f;
     public float airWalkSpeed = 4f;
     public float jumpImpulse = 10f;
+    public float coyoteTimeDuration = 0.2f;
     Vector2 moveInput;
     TouchingDirections touchingDirections;
     Damageable damageable;
@@ -120,11 +121,29 @@ public class PlayerController : MonoBehaviour
         touchingDirections = GetComponent<TouchingDirections>();
         damageable = GetComponent<Damageable>();
     }
+
+    [SerializeField]
+    private bool isCoyoteTimeActive = false;
+    private float coyoteTimeTimer = 0f;
+
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
-            
-        animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
+            rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+            animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
+
+        if (touchingDirections.IsGrounded)
+        {
+            isCoyoteTimeActive = true;
+            coyoteTimeTimer = coyoteTimeDuration;
+        }
+        else if (isCoyoteTimeActive)
+        {
+            coyoteTimeTimer -= Time.fixedDeltaTime;
+            if (coyoteTimeTimer <= 0)
+            {
+                isCoyoteTimeActive = false;
+            }
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -166,12 +185,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void OnJump(InputAction.CallbackContext context)
+    public void OnJump(InputAction.CallbackContext context )
     {
-        if(context.started && touchingDirections.IsGrounded && CanMove)
+        if(context.started && touchingDirections.IsGrounded && CanMove || isCoyoteTimeActive && CanMove)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+
+            // Reset coyote time
+            isCoyoteTimeActive = false; 
         }
 
         if(context.canceled && rb.velocity.y > 0f)
@@ -193,3 +215,4 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
 }
+

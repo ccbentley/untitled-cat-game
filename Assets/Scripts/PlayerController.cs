@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))] 
 
@@ -187,7 +188,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputAction.CallbackContext context )
     {
-        if(context.started && touchingDirections.IsGrounded && CanMove || isCoyoteTimeActive && CanMove)
+        if (context.started && touchingDirections.IsGrounded && CanMove || isCoyoteTimeActive && CanMove)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
@@ -199,7 +200,7 @@ public class PlayerController : MonoBehaviour
         if(context.canceled && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        }
+        } 
     }
 
     public void OnAttack(InputAction.CallbackContext context)

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5699503016801779310}
   - component: {fileID: 7061485602076387393}
   - component: {fileID: 4153916158890355880}
+  - component: {fileID: 700719622604054633}
   m_Layer: 0
   m_Name: Flower Pot
   m_TagString: Pushable
@@ -232,3 +233,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &700719622604054633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9125876030125651577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e90e24fcc7c2c6e4cb356c868b26bead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breakVelocity: 5

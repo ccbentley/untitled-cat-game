@@ -10,14 +10,24 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Movement")]
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
     public float airWalkSpeed = 4f;
     public float jumpImpulse = 10f;
     public float coyoteTimeDuration = 0.2f;
+
     Vector2 moveInput;
     TouchingDirections touchingDirections;
     Damageable damageable;
+    AudioSource audioSource;
+
+    [Header("Audio")]
+    public AudioClip land1;
+    public AudioClip woosh1;
+    public float land1Volume = 1;
+    public float woosh1Volume = 1;
+
 
     public float CurrentMoveSpeed
     {
@@ -59,6 +69,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    [Header("Other")]
     [SerializeField]
     private bool _isMoving = false;
 
@@ -121,16 +132,20 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
         damageable = GetComponent<Damageable>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     [SerializeField]
     private bool isCoyoteTimeActive = false;
     private float coyoteTimeTimer = 0f;
 
+    [SerializeField]
+    private float fallSoundHight = 3f;
+
     private void FixedUpdate()
     {
-            rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
-            animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
+        rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+        animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
 
         if (touchingDirections.IsGrounded)
         {
@@ -144,6 +159,10 @@ public class PlayerController : MonoBehaviour
             {
                 isCoyoteTimeActive = false;
             }
+        }
+        if (touchingDirections.IsGrounded && rb.velocity.y <= -fallSoundHight)
+        {
+            audioSource.PlayOneShot(land1, land1Volume);
         }
     }
 
@@ -194,7 +213,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
 
             // Reset coyote time
-            isCoyoteTimeActive = false; 
+            isCoyoteTimeActive = false;
         }
 
         if(context.canceled && rb.velocity.y > 0f)
@@ -208,6 +227,7 @@ public class PlayerController : MonoBehaviour
         if(context.started)
         {
             animator.SetTrigger(AnimationStrings.attackTrigger);
+            audioSource.PlayOneShot(woosh1, woosh1Volume);
         }
     }
 
@@ -215,5 +235,8 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
+
+
+
 }
 

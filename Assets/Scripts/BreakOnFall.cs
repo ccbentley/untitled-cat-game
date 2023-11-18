@@ -9,7 +9,7 @@ public class BreakOnFall : MonoBehaviour
     public ContactFilter2D castFilter;
     Rigidbody2D rb;
     Animator animator;
-    BoxCollider2D touchingCol;
+    Collider2D touchingCol;
     RaycastHit2D[] groundHits = new RaycastHit2D[5];
 
     public float breakVelocity = 5f;
@@ -22,7 +22,7 @@ public class BreakOnFall : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        touchingCol = GetComponent<BoxCollider2D>();
+        touchingCol = GetComponent<Collider2D>();
     }
 
     private bool IsGrounded

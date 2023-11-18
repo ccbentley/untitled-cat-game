@@ -10,6 +10,7 @@ public class BreakOnFall : MonoBehaviour
     Rigidbody2D rb;
     Animator animator;
     Collider2D touchingCol;
+    Damageable damageable;
     RaycastHit2D[] groundHits = new RaycastHit2D[5];
 
     public float breakVelocity = 5f;
@@ -23,6 +24,7 @@ public class BreakOnFall : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         touchingCol = GetComponent<Collider2D>();
+        damageable = GetComponent<Damageable>();
     }
 
     private bool IsGrounded
@@ -43,7 +45,7 @@ public class BreakOnFall : MonoBehaviour
 
         if (IsGrounded && rb.velocity.y <= -breakVelocity)
         {
-            animator.SetBool(AnimationStrings.isAlive, false);
+            damageable.IsAlive = false;
         }
     }
 }

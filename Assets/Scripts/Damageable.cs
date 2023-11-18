@@ -10,9 +10,10 @@ public class Damageable : MonoBehaviour
     public UnityEvent damageableDeath;
     public UnityEvent<int, int> healthChanged;
 
+    public int moneyValue = 0;
+
     Animator animator;
 
-    [SerializeField]
     private int _maxHealth = 100;
 
     public int MaxHealth
@@ -113,5 +114,16 @@ public class Damageable : MonoBehaviour
 
         // Unable to be hit
         return false;
+    }
+
+    private bool alreadyUpdatedMoney = false;
+
+    public void UpdateTotalMoney()
+    {
+        if (!alreadyUpdatedMoney)
+        {
+            Variables.totalMoney += moneyValue;
+            alreadyUpdatedMoney = true;
+        }
     }
 }

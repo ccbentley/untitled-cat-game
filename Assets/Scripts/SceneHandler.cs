@@ -7,6 +7,11 @@ public class SceneHandler : MonoBehaviour
 {
     [SerializeField] RectTransform fader;
 
+    private void Awake()
+    {
+        LeanTween.reset();
+    }
+
     private void Start()
     {
         fader.gameObject.SetActive(true);
@@ -18,8 +23,9 @@ public class SceneHandler : MonoBehaviour
         // });
 
         // SCALE
-        LeanTween.scale(fader, new Vector3(1, 1, 1), 0);
-        LeanTween.scale(fader, Vector3.zero, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => {
+        LeanTween.scale(fader, new Vector2(1, 1), 0);
+        LeanTween.scale(fader, Vector2.zero, 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() =>
+        {
             fader.gameObject.SetActive(false);
         });
     }
@@ -35,8 +41,8 @@ public class SceneHandler : MonoBehaviour
         // });
 
         // SCALE
-        LeanTween.scale(fader, Vector3.zero, 0f);
-        LeanTween.scale(fader, new Vector3(1, 1, 1), 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => {
+        LeanTween.scale(fader, Vector2.zero, 0f);
+        LeanTween.scale(fader, new Vector2(1, 1), 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => {
             SceneManager.LoadScene(0);
         });
     }
@@ -53,8 +59,8 @@ public class SceneHandler : MonoBehaviour
         // });
 
         // SCALE
-        LeanTween.scale(fader, Vector3.zero, 0f);
-        LeanTween.scale(fader, new Vector3(1, 1, 1), 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => {
+        LeanTween.scale(fader, Vector2.zero, 0f);
+        LeanTween.scale(fader, new Vector2(1, 1), 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => {
             // Example for little pause before laoding the next scene
             Invoke("LoadGame", 0.5f);
         });

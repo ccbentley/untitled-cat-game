@@ -226,6 +226,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd1ac41d8d5b164a8d15ca278d2aa73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hit1: {fileID: 8300000, guid: d86750e3a4d6a2c4f9fab45b470e8305, type: 3}
+  hit1Volume: 0.5
 --- !u!95 &8238293717127401639
 Animator:
   serializedVersion: 5
@@ -398,7 +400,7 @@ MonoBehaviour:
   - {x: 0.125, y: -0.1875, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1364
+  m_InstanceId: 61882
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.125, y: 0.1875, z: 0}

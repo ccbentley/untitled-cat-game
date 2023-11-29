@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+using UnityEngine.Events;
 
 public class TotalMoneyDisplay : MonoBehaviour
 {
+    public UnityEvent goalReached;
     public TMP_Text totalMoneyText;
-    int totalMoney;
+    public float totalMoneyToBreak = 1000;
 
     private void Update()
     {
-        totalMoney = Variables.totalMoney;
-        totalMoneyText.text = "TOTAL AMOUNT DESTROYED: $" + totalMoney.ToString();
+        totalMoneyText.text = "TOTAL AMOUNT DESTROYED: $" + Variables.totalMoney.ToString() + " / $" + totalMoneyToBreak;
+        if(Variables.totalMoney >= totalMoneyToBreak)
+        {
+            goalReached.Invoke();
+        }
     }
 
     private void Start()

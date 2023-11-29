@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,7 +28,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip woosh1;
     public float land1Volume = 1;
     public float woosh1Volume = 1;
-
 
     public float CurrentMoveSpeed
     {
@@ -141,6 +141,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private float fallSoundHight = 3f;
+    private bool canPlayLandSound = true;
+    private float landSoundCooldown = 0;
 
     private void FixedUpdate()
     {
@@ -162,7 +164,22 @@ public class PlayerController : MonoBehaviour
         }
         if (touchingDirections.IsGrounded && rb.velocity.y <= -fallSoundHight)
         {
-            audioSource.PlayOneShot(land1, land1Volume);
+            if (canPlayLandSound)
+            {
+                audioSource.PlayOneShot(land1, land1Volume);
+                canPlayLandSound = false;
+                landSoundCooldown = 1;
+            }
+        }
+        if (!canPlayLandSound)
+        {
+            landSoundCooldown -= Time.fixedDeltaTime;
+
+            if (landSoundCooldown <= 0.0f)
+            {
+                canPlayLandSound = true;
+                landSoundCooldown = 0.0f; 
+            }
         }
     }
 

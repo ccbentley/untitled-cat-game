@@ -4,7 +4,7 @@ using UnityEngine;
 using static Unity.Burst.Intrinsics.X86.Avx;
 
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Damageable), typeof(AudioSource))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class HitDetection : MonoBehaviour
 {
     Rigidbody2D rb;
@@ -21,7 +21,6 @@ public class HitDetection : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        damageable = GetComponent<Damageable>();
         player = GameObject.FindWithTag("Player");
         audioSource = player.GetComponent<AudioSource>();
 

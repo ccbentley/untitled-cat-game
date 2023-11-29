@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class SceneHandler : MonoBehaviour
@@ -42,8 +43,8 @@ public class SceneHandler : MonoBehaviour
 
         // SCALE
         LeanTween.scale(fader, Vector2.zero, 0f);
-        LeanTween.scale(fader, new Vector2(1, 1), 0.5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => {
-            SceneManager.LoadScene(0);
+        LeanTween.scale(fader, new Vector2(1, 1), 5f).setEase(LeanTweenType.easeInOutQuad).setOnComplete(() => {
+            Invoke("LoadMenu", 0.2f);
         });
     }
 
@@ -70,5 +71,16 @@ public class SceneHandler : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-   
+    private void LoadMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            OpenMenuScene();
+        }
+    }
 }

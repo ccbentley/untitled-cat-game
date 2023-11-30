@@ -11,7 +11,7 @@ public class RigidbodyControl : MonoBehaviour
        rb = GetComponent<Rigidbody2D>();
     }
 
-   public void RemoveContraints()
+   public void RemoveConstraints()
     {
         rb.constraints = RigidbodyConstraints2D.None;
     }

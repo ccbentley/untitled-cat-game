@@ -40,7 +40,7 @@ public class Timer : MonoBehaviour
     public void UpdateLastTime()
     {
         Variables.lastTime = timeValue;
-        if (timeValue < Variables.lastTime || Variables.bestTime < 0)
+        if (timeValue < Variables.bestTime || Variables.bestTime < 0)
         {
             Variables.bestTime = timeValue;
         }

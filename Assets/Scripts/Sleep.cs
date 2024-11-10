@@ -11,10 +11,12 @@ public class Sleep : MonoBehaviour
     public UnityEvent OffBed;
 
     private bool scriptEnabled = false; 
+    
+    private bool onBed = false;
 
     public void OnUse(InputAction.CallbackContext context)
     {
-        if(context.started && scriptEnabled)
+        if(context.started && scriptEnabled && onBed)
         {
             OnSleep.Invoke();
         }
@@ -25,6 +27,7 @@ public class Sleep : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             OnBed.Invoke();
+            onBed = true;
         }
     }
 
@@ -33,6 +36,7 @@ public class Sleep : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             OffBed.Invoke();
+            onBed = false;
         }
     }
 

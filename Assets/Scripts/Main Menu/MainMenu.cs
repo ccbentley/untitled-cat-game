@@ -12,19 +12,38 @@ public class MainMenu : MonoBehaviour
     public GameObject CreditsMenu;
 
     public TMP_Text lastTimeText;
+    public TMP_Text bestTimeText;
 
     void Start()
     {
         MainMenuButton();
-        DisplayLastTime(Variables.lastTime);
+        DisplayLastTime(Variables.lastTime, Variables.bestTime);
     }
 
-    void DisplayLastTime(float timeToDisplay)
+    void DisplayLastTime(float lastTime, float bestTime)
     {
-    float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-    float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-
-    lastTimeText.text = string.Format("Previous Time: {0:00}:{1:00}", minutes, seconds);
+        if (lastTime >= 0)
+        {
+            float minutes = Mathf.FloorToInt(lastTime / 60);
+            float seconds = Mathf.FloorToInt(lastTime % 60);
+            float milliseconds = (lastTime % 1) * 1000;
+            lastTimeText.text = string.Format("Last Time: {0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        }
+        else
+        {
+            lastTimeText.text = "Last Time: --";
+        }
+        if (bestTime >= 0)
+        {
+            float minutes = Mathf.FloorToInt(bestTime / 60);
+            float seconds = Mathf.FloorToInt(bestTime % 60);
+            float milliseconds = (bestTime % 1) * 1000;
+            bestTimeText.text = string.Format("Best Time: {0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
+        }
+        else
+        {
+            bestTimeText.text = "Best Time: --";
+        }
     }
 
     public void PlayButton()

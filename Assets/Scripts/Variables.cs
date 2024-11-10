@@ -6,5 +6,6 @@ using System.Threading.Tasks;
 internal class Variables
 {
     internal static int totalMoney = 0;
-    internal static float lastTime = 0;
+    internal static float lastTime = -1;
+    internal static float bestTime = -1;
 }

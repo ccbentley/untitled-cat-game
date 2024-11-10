@@ -43,7 +43,7 @@ public class BreakOnFall : MonoBehaviour
     {
         IsGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
 
-        if (IsGrounded && rb.velocity.y <= -breakVelocity && damageable.IsAlive)
+        if (IsGrounded && rb.linearVelocity.y <= -breakVelocity && damageable.IsAlive)
         {
             damageable.IsAlive = false;
         }

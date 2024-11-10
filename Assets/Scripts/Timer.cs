@@ -21,10 +21,11 @@ public class Timer : MonoBehaviour
     }
     void DisplayTime(float timeToDisplay)
     {
-    float minutes = Mathf.FloorToInt(timeToDisplay / 60);
-    float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+        float milliseconds = (timeToDisplay % 1) * 1000;
 
-    timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        timeText.text = string.Format("{0:00}:{1:00}:{2:000}", minutes, seconds, milliseconds);
     }
 
     public void StopTimer()
@@ -39,5 +40,9 @@ public class Timer : MonoBehaviour
     public void UpdateLastTime()
     {
         Variables.lastTime = timeValue;
+        if (timeValue < Variables.lastTime || Variables.bestTime < 0)
+        {
+            Variables.bestTime = timeValue;
+        }
     }
 }

@@ -83,4 +83,12 @@ public class SceneHandler : MonoBehaviour
             OpenMenuScene();
         }
     }
+
+    public void OnRetry(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            LoadGame();
+        }
+    }
 }

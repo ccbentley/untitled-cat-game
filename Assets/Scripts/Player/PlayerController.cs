@@ -2,10 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))] 
 
@@ -146,8 +144,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
-        animator.SetFloat(AnimationStrings.yVelocity, rb.velocity.y);
+        rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
+        animator.SetFloat(AnimationStrings.yVelocity, rb.linearVelocity.y);
 
         if (touchingDirections.IsGrounded)
         {
@@ -162,7 +160,7 @@ public class PlayerController : MonoBehaviour
                 isCoyoteTimeActive = false;
             }
         }
-        if (touchingDirections.IsGrounded && rb.velocity.y <= -fallSoundHight)
+        if (touchingDirections.IsGrounded && rb.linearVelocity.y <= -fallSoundHight)
         {
             if (canPlayLandSound)
             {
@@ -227,15 +225,15 @@ public class PlayerController : MonoBehaviour
         if (context.started && touchingDirections.IsGrounded && CanMove || isCoyoteTimeActive && CanMove)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
-            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpImpulse);
 
             // Reset coyote time
             isCoyoteTimeActive = false;
         }
 
-        if(context.canceled && rb.velocity.y > 0f)
+        if(context.canceled && rb.linearVelocity.y > 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.5f);
         } 
     }
 
@@ -250,6 +248,6 @@ public class PlayerController : MonoBehaviour
 
     public void OnHit(int damage, Vector2 knockback)
     {
-        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
     }
 }

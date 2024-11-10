@@ -28,7 +28,7 @@ public class HitDetection : MonoBehaviour
 
     public void OnHit(int damage, Vector2 knockback)
     {
-        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+        rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
         audioSource.PlayOneShot(hit1, hit1Volume);
     }
 }
